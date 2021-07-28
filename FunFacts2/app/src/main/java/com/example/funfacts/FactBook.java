@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class FactBook {
     // Fields or member Variables - Properties about the object
-    private String[] facts = {
+    public String[] mFacts = {
             "Ants stretch when they wake up in the morning.",
             "Ostriches can run faster than horses.",
             "Olympic gold medals are actually made mostly of silver.",
@@ -20,7 +20,7 @@ public class FactBook {
     public String getFact() {
         // Randomly select a fact
         Random randomGenerator = new Random();
-        int randomNumber = randomGenerator.nextInt(facts.length);
-        return facts[randomNumber];
+        int randomNumber = randomGenerator.nextInt(mFacts.length);
+        return mFacts[randomNumber];
     }
 }
