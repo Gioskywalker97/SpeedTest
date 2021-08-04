@@ -16,16 +16,13 @@ public class ListFragment extends Fragment {
         void onListRecipeSelected(int index);
     }
 
-    public ListFragment() {
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         OnRecipeSelectedInterface listener = (OnRecipeSelectedInterface) getActivity();
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_recycleview, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.listRecycleView);
+        RecyclerView recyclerView = view.findViewById(R.id.RecycleView);
         ListAdapter listAdapter = new ListAdapter(listener);
         recyclerView.setAdapter(listAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
