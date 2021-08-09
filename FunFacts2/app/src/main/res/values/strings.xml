@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">FunFacts</string>
-    <string name="did_you_know">Did you know?</string>
-    <string name="ants_stretch_when_they_wake_up_in_the_morning">Ants stretch when they wake up in the morning.</string>
-    <string name="button">Button</string>
-    <string name="show_another_fun_fact">Show Another Fun Fact</string>
-
-</resources>
