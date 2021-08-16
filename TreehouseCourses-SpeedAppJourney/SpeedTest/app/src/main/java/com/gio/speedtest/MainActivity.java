@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.media.Image;
 import android.net.ConnectivityManager;
@@ -12,6 +13,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -41,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
         ImageView moonImage = findViewById(R.id.moonImage);
         ImageView whiteBolt = findViewById(R.id.whiteBolt);
         ImageView blackBolt = findViewById(R.id.blackBolt);
-//        ImageView whiteSignal = findViewById(R.id.whiteSignal);
+        ImageView networkWhite = findViewById(R.id.networkCheckWhite);
+        ImageView networkBlack = findViewById(R.id.networkCheckBlack);
         TextView upSpeedNum = findViewById(R.id.upSpeedNumber);
         TextView upSpeedText = findViewById(R.id.upSpeedText);
         TextView downSpeedNum = findViewById(R.id.downSpeedNumber);
@@ -52,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         NetworkCapabilities capabilities = manager.getNetworkCapabilities(manager.getActiveNetwork());
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+
+        attribute.setMovementMethod(LinkMovementMethod.getInstance());
 
         testButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
@@ -64,37 +69,20 @@ public class MainActivity extends AppCompatActivity {
                         int upSpeeds = capabilities.getLinkUpstreamBandwidthKbps();
                         downSpeedNum.setText(size(downSpeeds) + "");
                         upSpeedNum.setText(size(upSpeeds) + "");
-                        testButton.setText("Tested Speed!");
+                        testButton.setText("Test Again?");
                         textView.setVisibility(View.VISIBLE);
-                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
                             int downWifi = wifiInfo.getRxLinkSpeedMbps();
                             int upWifi = wifiInfo.getTxLinkSpeedMbps();
                             downSpeedNum.setText(size(downWifi) + "");
                             upSpeedNum.setText(size(upWifi) + "");
-                            testButton.setText("Tested Speed!");
+                            testButton.setText("Test Again?");
                             textView.setVisibility(View.VISIBLE);
                         }
-                } else {
-                        Toast.makeText(MainActivity.this, R.string.network_unavailable_message, Toast.LENGTH_LONG).show();
                     }
-//                    if (testButton.getText().equals("Test Speed Please!")) {
-//                        testButton.setText("Testing Speed!");
-//                        progressUpdateBar.setVisibility(View.VISIBLE);
-//                        textView.setVisibility(View.VISIBLE);
-//                        //Toast.makeText(MainActivity.this, "Testing how fast...", Toast.LENGTH_LONG).show();
-//                    } else if (testButton.getText().equals("Canceled. Test Again!")) {
-//                        testButton.setText("Testing Speed!");
-//                        progressUpdateBar.setVisibility(View.VISIBLE);
-//                        textView.setText("We are pinging the servers. Please be patient.");
-//                        //Toast.makeText(MainActivity.this, "Testing how fast...", Toast.LENGTH_LONG).show();
-//                    } else {
-//                        testButton.setText("Canceled. Test Again!");
-//                        progressUpdateBar.setVisibility(View.INVISIBLE);
-//                        textView.setVisibility(View.VISIBLE);
-//                        textView.setText("Sorry, we couldn't finish checking your speed. Please try again. Or don't. It really doesn't matter.");
-//                        //Toast.makeText(MainActivity.this, "Aw, we didn't finish :(", Toast.LENGTH_LONG).show();
-//                    }
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.network_unavailable_message, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -109,12 +97,17 @@ public class MainActivity extends AppCompatActivity {
                         moonImage.setVisibility(View.VISIBLE);
                         whiteBolt.setVisibility(View.VISIBLE);
                         blackBolt.setVisibility(View.INVISIBLE);
-                        upSpeedNum.setTextColor(Color.parseColor("#00FFFF"));
-                        upSpeedText.setTextColor(Color.parseColor("#00FFFF"));
-                        downSpeedNum.setTextColor(Color.parseColor("#00FFFF"));
-                        downSpeedText.setTextColor(Color.parseColor("#00FFFF"));
-                        infoTexts.setTextColor(Color.parseColor("#00FFFF"));
-                        attribute.setTextColor(Color.parseColor("#00FFFF"));
+                        upSpeedNum.setTextColor(Color.WHITE);
+                        upSpeedText.setTextColor(Color.WHITE);
+                        downSpeedNum.setTextColor(Color.WHITE);
+                        downSpeedText.setTextColor(Color.WHITE);
+                        infoTexts.setTextColor(Color.WHITE);
+                        attribute.setTextColor(Color.WHITE);
+                        networkWhite.setVisibility(View.VISIBLE);
+                        networkBlack.setVisibility(View.INVISIBLE);
+                        testButton.setTextColor(Color.WHITE);
+                        lightSwitch.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
+                        lightSwitch.setTextColor(Color.WHITE);
                     } else {
                         moonImage.setVisibility(View.INVISIBLE);
                         sunImage.setVisibility(View.VISIBLE);
@@ -127,6 +120,11 @@ public class MainActivity extends AppCompatActivity {
                         downSpeedText.setTextColor(Color.BLACK);
                         infoTexts.setTextColor(Color.BLACK);
                         attribute.setTextColor(Color.BLACK);
+                        networkWhite.setVisibility(View.INVISIBLE);
+                        networkBlack.setVisibility(View.VISIBLE);
+                        testButton.setTextColor(Color.BLACK);
+                        lightSwitch.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+                        lightSwitch.setTextColor(Color.BLACK);
                     }
                 }
         });
